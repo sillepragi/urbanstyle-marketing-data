@@ -4,11 +4,11 @@ UrbanStyle Sales Data ETL Pipeline.
 This script extracts data from Supabase, transforms it into analytics-ready
 formats, calculates KPIs, generates reports, and exports visual charts.
 
-Simple command-line usage:
-    python week-8/team/pipeline.py
+Simple command-line usage (in project root directory):
+    python3 week_8/pipeline.py
 
 Using custom sale_date range:
-    python week-8/team/pipeline.py --start-date=2024-12-01 --end-date=2024-12-31
+    python3 week_8/pipeline.py --start-date=2024-12-01 --end-date=2024-12-31
 """
 
 import logging
@@ -91,8 +91,7 @@ def run_pipeline(*, start_date, end_date):
             }
         )
 
-        summary = visualize_export.send_success_notification(kpis, saved_files)
-        logger.info(f"Summary:\n{summary}")
+        visualize_export.send_success_notification(kpis, saved_files)
         _log_etl_stage_event("Finished", "LOAD")
         
     except Exception as e:
@@ -108,8 +107,9 @@ def _parse_command_line_arguments():
     # Adding usage examples to the help output via epilog
     epilog_examples = (
         "Examples:\n"
-        "  python pipeline.py\n"
-        "  python pipeline.py --start-date=2024-12-01 --end-date=2024-12-31"
+        "  Note: The examples below assume that the script is executed from the project root directory.\n\n"
+        "  python3 week_8/pipeline.py\n"
+        "  python3 week_8/pipeline.py --start-date=2024-12-01 --end-date=2024-12-31"
     )
     
     parser = argparse.ArgumentParser(
@@ -135,7 +135,6 @@ def _parse_command_line_arguments():
     # Underscore (_) represents the rest of the tuple which we don't need.
     args, _ = parser.parse_known_args()
     return args
-
 
 def _normalize_date(date_str):
     """
