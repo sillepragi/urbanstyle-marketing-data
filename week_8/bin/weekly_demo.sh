@@ -16,8 +16,9 @@ current_dir=$(pwd)
 # The directory this shell script is located in.
 script_dir=$(dirname "$0")
 
-# The project directory is the parent directory of the script directory.
-project_root_dir=$(dirname "$script_dir")
+# The project root directory is two directories up from the script directory.
+parent_directory=$(dirname "$script_dir")
+project_root_dir=$(dirname "$parent_directory")
 
 # Regardless of the outcome, return back to where we started after this script terminates.
 trap 'cd "$current_dir"' EXIT
